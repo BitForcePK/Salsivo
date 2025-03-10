@@ -49,7 +49,7 @@ export default function TabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          height: 90,
+          height: 75,
           backgroundColor: "#FFFFFF",
           paddingBottom: 15, // Ensures content is not hidden
           borderTopWidth: 0,
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 1000,
     width: 70,
     position: "absolute",
-    bottom: 20,
+    bottom: 10,
     height: 70,
     alignSelf: "center",
   },

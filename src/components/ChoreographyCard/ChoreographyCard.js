@@ -11,6 +11,7 @@ const ChoreographyCard = ({
   videoUri,
   onPress,
   style,
+  btnStyle,
 }) => {
   return (
     <View style={[styles.cardContainer, style]}>
@@ -36,7 +37,10 @@ const ChoreographyCard = ({
         </View>
 
         {/* Practice Button */}
-        <TouchableOpacity style={styles.practiceButton} onPress={onPress}>
+        <TouchableOpacity
+          style={[styles.practiceButton, btnStyle]}
+          onPress={onPress}
+        >
           <Ionicons name="play" size={20} color="#D32F2F" />
           <Text style={styles.buttonText}>Start Practice</Text>
           <Text style={styles.duration}>{duration}</Text>
@@ -53,7 +57,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     marginBottom: 16,
     marginRight: 15, // Horizontal spacing for FlatList
-    elevation: 4, // Android shadow
     shadowColor: "#000", // iOS shadow
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#D32F2F0A",
     width: 190,
-    height: 30,
+    height: 35,
     paddingHorizontal: 7,
     borderRadius: 100,
     borderWidth: 1,
@@ -102,12 +105,12 @@ const styles = StyleSheet.create({
   buttonText: {
     flex: 1,
     marginLeft: 8,
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: "Raleway-SemiBold",
     color: "#D32F2F",
   },
   duration: {
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: "Raleway-Medium",
     color: "#D32F2F",
   },

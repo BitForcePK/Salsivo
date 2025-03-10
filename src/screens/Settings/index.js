@@ -21,8 +21,16 @@ export default function SettingsScreen() {
 
   const menuItems = [
     { icon: "user", text: "Profile", screen: "Profile" },
-    { icon: "message-square", text: "Choreographies" },
-    { icon: "crown", text: "Subscriptions", screen: "Subscriptions" },
+    {
+      icon: require("../../assets/icons/choreographyIcon.png"),
+      text: "Choreographies",
+      screen: "ChoreographiesList",
+    },
+    {
+      icon: require("../../assets/icons/subscriptionIcon.png"),
+      text: "Subscriptions",
+      screen: "Subscriptions",
+    },
     { icon: "bell", text: "Notifications", hasSwitch: true },
     { icon: "message-circle", text: "Feedback" },
   ];
@@ -41,7 +49,11 @@ export default function SettingsScreen() {
       }}
     >
       <View style={styles.menuIconContainer}>
-        <Feather name={item.icon} size={22} color="#E74C3C" />
+        {typeof item.icon === "string" ? (
+          <Feather name={item.icon} size={22} color="#E74C3C" />
+        ) : (
+          <Image source={item.icon} style={{ width: 22, height: 22 }} />
+        )}
       </View>
       <Text style={item.isRed ? styles.deleteText : styles.menuText}>
         {item.text}

@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
     color: "#B8B8B8",
     fontSize: 16,
     fontFamily: "Raleway-Medium",
+    marginBottom: 2,
   },
   disabledButton: {
     opacity: 0.5,

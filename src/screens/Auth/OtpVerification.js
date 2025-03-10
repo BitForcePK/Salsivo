@@ -101,7 +101,7 @@ const OtpVerification = ({ navigation }) => {
             onPress={
               () =>
                 isOtpCorrect
-                  ? navigation.navigate("TabNavigator") // Navigate if OTP is correct
+                  ? navigation.navigate("PremiumScreen") // Navigate if OTP is correct
                   : alert("Incorrect OTP! Please try again.") // Show error if incorrect
             }
             style={{

@@ -83,6 +83,7 @@ const ChoreographiesList = () => {
 
   const renderItem = ({ item }) => (
     <ChoreographyCard
+      btnStyle={{ width: "100%" }}
       style={{ width: "100%" }}
       title={item.title}
       notation={item.notation}

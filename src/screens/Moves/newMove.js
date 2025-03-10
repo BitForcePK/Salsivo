@@ -513,7 +513,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     padding: 15,
-    marginBottom: 30,
+    marginBottom: 20,
   },
   formSection: {
     marginBottom: 24,
