@@ -1,6 +1,7 @@
 import Constants from "expo-constants";
 import { Platform, StyleSheet, View } from "react-native";
 import React from "react";
+import HomeProfileHeader from "../LogoProfileHeader";
 
 export default function Container({
   children,
@@ -8,6 +9,7 @@ export default function Container({
   modal = false,
   bgclr = "#fff",
   pd = 8,
+  isHomeHeader = false,
 }) {
   const height = Constants.statusBarHeight;
   return (
@@ -26,6 +28,7 @@ export default function Container({
         cusStyles,
       ]}
     >
+      {isHomeHeader && <HomeProfileHeader />}
       {children}
     </View>
   );

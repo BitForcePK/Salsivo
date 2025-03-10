@@ -71,7 +71,7 @@ const OnBoarding = () => {
     if (currentIndex < onboardingData.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     } else {
-      navigation.navigate("SignIn"); // Navigate to SignUp screen when last index is reached
+      navigation.navigate("ReferralSource"); // Navigate to SignUp screen when last index is reached
     }
   };
 

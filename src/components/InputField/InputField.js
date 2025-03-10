@@ -103,7 +103,9 @@ const InputField = ({
         )}
       </View>
       <Animated.Text style={labelStyle}>{label}</Animated.Text>
-      <Text style={styles.errorText}>{errorMsg}</Text>
+      <View style={{ marginTop: 10 }}>
+        {errorMsg && <Text style={styles.errorText}>{errorMsg}</Text>}
+      </View>
     </View>
   );
 };
@@ -111,7 +113,6 @@ const InputField = ({
 const styles = StyleSheet.create({
   container: {
     position: "relative",
-    marginVertical: 7,
   },
   inputContainer: {
     position: "relative",

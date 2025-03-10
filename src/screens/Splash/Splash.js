@@ -34,9 +34,18 @@ const Splash = () => {
 
       <View style={styles.content}>
         <Image
-          source={require("../../../src/assets/icons/logo.png")}
+          source={require("../../../src/assets/images/splashLogo.png")}
           style={styles.image}
         />
+        <Text
+          style={{
+            fontFamily: "Raleway-ExtraBold",
+            fontSize: 50,
+            marginLeft: -18,
+          }}
+        >
+          alsivo
+        </Text>
       </View>
       <Text style={styles.text}>
         Get ready to dance to the rhythm of Salsa!
@@ -55,13 +64,16 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    marginHorizontal: "auto",
   },
   image: {
-    width: width * 0.6,
-    height: height * 0.3,
+    width: 120,
+    height: 120,
     resizeMode: "contain",
+    marginHorizontal: "auto",
   },
   text: {
     textAlign: "center",

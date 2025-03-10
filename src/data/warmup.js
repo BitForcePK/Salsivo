@@ -1,0 +1,83 @@
+export const warmups = [
+  {
+    id: "1",
+    title: "Warmup 1",
+    sessionType: "Duo",
+    duration: "10 min",
+    image: require("../assets/images/warmup1.png"),
+    videoUrl: require("../assets/dance.mp4"),
+    description: "A great warm-up to start your session.",
+    difficulty: "Easy",
+  },
+  {
+    id: "2",
+    title: "Warmup 2",
+    sessionType: "Duo",
+    duration: "8 min",
+    difficulty: "Medium",
+    image: require("../assets/images/warmup2.png"),
+    videoUrl: require("../assets/dance.mp4"),
+    description: "Loosen up your muscles before an intense workout.",
+  },
+  {
+    id: "3",
+    title: "Warmup 3",
+    sessionType: "Solo",
+    duration: "12 min",
+    image: require("../assets/images/warmup4.png"),
+
+    videoUrl: require("../assets/dance.mp4"),
+  },
+  {
+    id: "4",
+    title: "Warmup 4",
+    sessionType: "Duo",
+    duration: "10 min",
+    image: require("../assets/images/warmup3.png"),
+
+    videoUrl: require("../assets/dance.mp4"),
+  },
+];
+
+export const dummyData = [
+  {
+    id: "1",
+    image: require("../assets/images/warmup1.png"),
+    videoUrl: require("../assets/dance.mp4"),
+    abbreviation: "BB",
+    fullName: "Breakdancing",
+    description: "A street dance style from the 1970s.",
+    duration: "8 min",
+    difficulty: "Medium",
+  },
+  {
+    id: "2",
+    image: require("../assets/images/warmup2.png"),
+    abbreviation: "BLT",
+    fullName: "Ballet",
+    videoUrl: require("../assets/dance.mp4"),
+    description: "A classical dance form with graceful movements.",
+    duration: "8 min",
+    difficulty: "Medium",
+  },
+  {
+    id: "3",
+    image: require("../assets/images/warmup3.png"),
+    abbreviation: "HH",
+    fullName: "Hip-Hop",
+    videoUrl: require("../assets/dance.mp4"),
+    description: "A freestyle dance with urban origins.",
+    duration: "8 min",
+    difficulty: "Medium",
+  },
+  {
+    id: "4",
+    image: require("../assets/images/warmup4.png"),
+    abbreviation: "SL",
+    fullName: "Salsa",
+    videoUrl: require("../assets/dance.mp4"),
+    description: "A lively Latin American dance style.",
+    duration: "8 min",
+    difficulty: "Medium",
+  },
+];

@@ -73,6 +73,7 @@ const SignUp = () => {
     if (validateForm()) {
       console.log("Sign Up Successful", form);
     }
+    navigation.navigate("OtpVerification");
   };
 
   return (
@@ -185,7 +186,6 @@ const styles = StyleSheet.create({
   signUpText: {
     fontFamily: "Raleway-Bold",
     fontSize: 30,
-    textAlign: "center",
   },
   termsText: {
     color: "#5A5A5A",

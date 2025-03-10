@@ -65,6 +65,7 @@ const SignIn = () => {
     if (validateForm()) {
       // Perform login logic here
       console.log("Login Successful", form);
+      navigation.navigate("TabNavigator");
     }
   };
 
@@ -183,5 +184,4 @@ const styles = StyleSheet.create({
     color: "#D32F2F",
     marginLeft: 5,
   },
-
 });
