@@ -7,6 +7,7 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import HomeProfileHeader from "../../components/LogoProfileHeader";
@@ -17,23 +18,41 @@ import { Button } from "react-native-paper";
 import { StitchIcon } from "../../assets/svgs/StitchIcon";
 import TabContainer from "../../components/TabContainer";
 import ChoreographyCard from "../../components/ChoreographyCard/ChoreographyCard";
+import Api from "../../api";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [choreographies, setChoreographies] = useState([]);
+  const [warmups, setWarmups] = useState([]);
 
   // Handle new choreography from navigation params
-  useEffect(() => {
-    console.log("Route params changed:", route.params);
-    if (route.params?.newChoreography) {
-      console.log("New choreography detected:", route.params.newChoreography);
-      setChoreographies((prev) => [...prev, route.params.newChoreography]);
+  // useEffect(() => {
+  //   console.log("Route params changed:", route.params);
+  //   if (route.params?.newChoreography) {
+  //     console.log("New choreography detected:", route.params.newChoreography);
+  //     setChoreographies((prev) => [...prev, route.params.newChoreography]);
 
-      // Clear the parameter after using it to prevent duplicates on re-renders
-      navigation.setParams({ newChoreography: undefined });
+  //     // Clear the parameter after using it to prevent duplicates on re-renders
+  //     navigation.setParams({ newChoreography: undefined });
+  //   }
+  // }, [route.params]);
+
+  useEffect(() => {
+    getWarmUps();
+  }, []);
+
+  const getWarmUps = async () => {
+    const res = await Api.getAllWarmUps();
+
+    if (res?.error) {
+      Alert.alert("Error", res?.error);
+      return;
     }
-  }, [route.params]);
+
+    setWarmups(res?.data?.warmUps);
+    // setWarmups(res?.data);
+  };
 
   const handleChoreographyPress = (choreography) => {
     navigation.navigate("ChoreographyScreen", { choreography });
@@ -108,9 +127,9 @@ const HomeScreen = () => {
         {/* Warmups Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Warmups</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("")}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("")}>
             <Text style={styles.seeAll}>See All</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         {/* Horizontal Warmups List */}

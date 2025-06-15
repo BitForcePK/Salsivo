@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as ImageManipulator from "expo-image-manipulator";
 
 export default class Api {
   // IMAGES
@@ -7,7 +8,29 @@ export default class Api {
       if (setLoading) setLoading(true);
 
       const formData = new FormData();
-      formData.append("image", file);
+
+      const filename = file?.name
+        ? file.name
+        : file?.fileName
+        ? file.fileName
+        : file.uri.split("/").pop() || "";
+      const ext = filename.split(".").pop() || "";
+
+      const { width, height, uri } = file;
+
+      const result = await ImageManipulator.manipulateAsync(
+        uri,
+        [{ resize: { width: width / 2.5, height: height / 2.5 } }],
+        { compress: 0.15, format: ImageManipulator.SaveFormat.JPEG }
+      );
+
+      const newFile = {
+        uri: result.uri,
+        name: filename.trim(),
+        type: `image/${ext}`,
+      };
+
+      formData.append("image", newFile);
 
       const res = await axios.post(`upload-image${query}`, formData, {
         headers: {
@@ -89,6 +112,20 @@ export default class Api {
     }
   };
 
+  static register = async (data, setLoading) => {
+    try {
+      if (setLoading) setLoading(true);
+      const res = await axios.post("auth/register", data);
+      return { data: res.data };
+    } catch (error) {
+      return {
+        error: error?.response?.data?.message || error.message,
+      };
+    } finally {
+      if (setLoading) setLoading(false);
+    }
+  };
+
   // Get Profile
   static getProfile = async (setLoading) => {
     try {
@@ -104,10 +141,10 @@ export default class Api {
     }
   };
 
-  static register = async (data, setLoading) => {
+  static updateProfile = async (data, setLoading) => {
     try {
       if (setLoading) setLoading(true);
-      const res = await axios.post("auth/register", data);
+      const res = await axios.patch("auth/update-profile", data);
       return { data: res.data };
     } catch (error) {
       return {

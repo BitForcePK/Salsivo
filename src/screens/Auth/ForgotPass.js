@@ -16,11 +16,17 @@ import InputField from "../../components/InputField/InputField";
 import { EmailIcon } from "../../assets/svgs/EmailIcon";
 import { PasswordIcon } from "../../assets/svgs/PasswordIcon";
 import Button from "../../components/Button/Button";
+import Api from "../../api";
 
 const { width, height } = Dimensions.get("window");
 
 const ForgotPass = () => {
   const navigation = useNavigation();
+
+  const [email, setEmail] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  const handleNext = async () => {};
 
   return (
     <Container>
@@ -52,11 +58,26 @@ const ForgotPass = () => {
               your account.
             </Text>
 
-            <InputField label={"Email ID"} icon={<EmailIcon />} />
+            <InputField
+              label={"Email ID"}
+              icon={<EmailIcon />}
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+              secureTextEntry={false}
+              keyboardType="email-address"
+              autoFocus
+              autoCapitalize="none"
+            />
           </View>
         </ScrollView>
 
-        <Button title={"Submit"} style={{ marginTop: 30 }} />
+        <Button
+          title={"Submit"}
+          style={{ marginTop: 30 }}
+          loading={loading}
+          disabled={!email || loading}
+          onPress={handleNext}
+        />
       </KeyboardAvoidingView>
     </Container>
   );

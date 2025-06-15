@@ -20,14 +20,14 @@ export default function AuthNavigator() {
         animation: "slide_from_right",
         headerShown: false,
       }}
-      initialRouteName={firstTime ? "OnBoarding" : "SignIn"}
+      // initialRouteName={firstTime ? "OnBoarding" : "SignIn"}
     >
       {/* <Stack.Screen name="Splash" component={Splash} /> */}
-      <Stack.Screen name="OnBoarding" component={OnBoarding} />
+      {firstTime && <Stack.Screen name="OnBoarding" component={OnBoarding} />}
+      <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="ReferralSource" component={ReferralSource} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="OtpVerification" component={OtpVerification} />
-      <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="ForgotPass" component={ForgotPass} />
       <Stack.Screen name="ResetPass" component={ResetPass} />
     </Stack.Navigator>

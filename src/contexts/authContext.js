@@ -47,6 +47,8 @@ export const AuthProvider = ({ children }) => {
     const token = await SecureStore.getItemAsync("user-token");
     const user = await SecureStore.getItemAsync("user-info");
 
+    // await AsyncStorage.removeItem("onboarding");
+
     if (!firstTime) {
       setFirstTime(true);
     }

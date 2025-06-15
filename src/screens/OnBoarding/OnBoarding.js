@@ -19,6 +19,7 @@ import { Svg, Circle } from "react-native-svg";
 import { useNavigation } from "@react-navigation/native";
 import Header from "../../components/Header/Header";
 import Container from "../../components/Container/Container";
+import Api from "../../api";
 
 // Enable LayoutAnimation for Android
 if (Platform.OS === "android") {
@@ -73,7 +74,7 @@ const OnBoarding = () => {
     if (currentIndex < onboardingData.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
     } else {
-      navigation.navigate("ReferralSource"); // Navigate to SignUp screen when last index is reached
+      navigation.replace("ReferralSource"); // Navigate to SignUp screen when last index is reached
     }
   };
 
@@ -97,9 +98,9 @@ const OnBoarding = () => {
           currentIndex={currentIndex}
           handleBack={handleBack} // Replace with the actual path to your logo
           onSkip={async () => {
-            console.log("Skipping onboarding");
             await AsyncStorage.setItem("onboarding", "true");
-            navigation.navigate("SignIn");
+            await Api.addSurvey({ answer: "skip" });
+            navigation.replace("SignIn");
           }}
         />
         <View style={styles.content}>

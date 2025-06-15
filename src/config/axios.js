@@ -11,7 +11,8 @@ async function getToken() {
   return token;
 }
 
-const URL = process.env.EXPO_PUBLIC_API_URL || "http://192.168.1.12:5001/";
+const URL =
+  process.env.EXPO_PUBLIC_API_URL || "https://api.salsivodanceapp.com/";
 
 axios.defaults.baseURL = URL + "api/v1/";
 axios.defaults.headers.post["Content-Type"] = "application/json";

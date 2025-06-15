@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { getTime } from "../../utils/time";
 
 export const WarmupItem = ({ warmup }) => {
   const navigation = useNavigation();
@@ -7,9 +8,9 @@ export const WarmupItem = ({ warmup }) => {
   return (
     <TouchableOpacity
       style={styles.warmupContainer}
-      onPress={() => navigation.navigate("MoveDetailsScreen", { warmup })}
+      onPress={() => navigation.navigate("WarmupDetails", { warmup })}
     >
-      <Image source={warmup.image} style={styles.image} />
+      <Image source={{ uri: warmup.cover }} style={styles.image} />
       <View style={styles.textContainer}>
         <Text style={styles.warmupTitle} numberOfLines={2} ellipsizeMode="tail">
           {warmup.title}
@@ -19,7 +20,7 @@ export const WarmupItem = ({ warmup }) => {
           numberOfLines={1}
           ellipsizeMode="tail"
         >
-          {warmup.sessionType} - {warmup.duration}
+          {warmup.mode} - {getTime(warmup.duration)}
         </Text>
       </View>
     </TouchableOpacity>

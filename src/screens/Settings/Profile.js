@@ -19,12 +19,15 @@ import BackHeader from "../../components/BackHeader";
 import Button from "../../components/Button/Button";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../hooks/useAuth";
+import { getAvatarUrl } from "../../utils/profile";
+import Api from "../../api";
 
 export default function ProfileEditScreen() {
   const navigation = useNavigation();
 
-  const { profile } = useAuth();
+  const { profile, getProfile } = useAuth();
 
+  const [loading, setLoading] = useState(false);
   const [avatar, setAvatar] = useState(null);
   const [data, setData] = useState({
     name: profile?.name,
@@ -52,6 +55,8 @@ export default function ProfileEditScreen() {
           aspect: [1, 1],
           quality: 0.7,
         });
+
+        console.log(result);
       } else {
         const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== "granted") {
@@ -75,6 +80,10 @@ export default function ProfileEditScreen() {
           Alert.alert("File too large", "Select an image smaller than 5MB");
           return;
         }
+
+        const asset = result.assets[0];
+
+        setAvatar(asset);
       }
     } catch (error) {
       console.error("Image selection error:", error);
@@ -82,14 +91,45 @@ export default function ProfileEditScreen() {
     }
   };
 
-  const saveProfile = () => {
-    if (!profile.name.trim()) {
+  const saveProfile = async () => {
+    if (!data.name.trim()) {
       return Alert.alert("Error", "Name cannot be empty");
     }
-    if (!profile.email.trim() || !profile.email.includes("@")) {
-      return Alert.alert("Error", "Enter a valid email address");
+
+    let dt = {
+      name: data.name,
+    };
+
+    if (avatar) {
+      const res = await Api.uploadImage(
+        avatar,
+        `?file_path=users/${profile?.id}/&file_name=avatar`,
+        setLoading
+      );
+
+      if (res?.error) {
+        Alert.alert("Error", res?.error);
+        return;
+      }
+
+      dt = {
+        ...dt,
+        avatar: res?.image?.url + "?q=" + Date.now(),
+        avatarMeta: res?.image,
+      };
     }
+
+    const res = await Api.updateProfile(dt, setLoading);
+
+    if (res?.error) {
+      Alert.alert("Error", res?.error);
+      return;
+    }
+
+    getProfile();
+
     Alert.alert("Success", "Profile updated successfully!");
+    navigation.goBack();
   };
 
   return (
@@ -98,7 +138,14 @@ export default function ProfileEditScreen() {
       <BackHeader title="Profile" />
       <ScrollView style={{ flex: 1, backgroundColor: "#f5f5f5" }}>
         <View style={styles.profileImageContainer}>
-          <Image source={{ uri: profile.image }} style={styles.profileImage} />
+          {avatar ? (
+            <Image source={{ uri: avatar?.uri }} style={styles.profileImage} />
+          ) : (
+            <Image
+              source={getAvatarUrl(data.avatar)}
+              style={styles.profileImage}
+            />
+          )}
           <TouchableOpacity
             style={styles.cameraButton}
             onPress={() =>
@@ -158,12 +205,15 @@ export default function ProfileEditScreen() {
           style={styles.changePasswordButton}
           textStyle={{ color: "black" }}
           onPress={() => navigation.navigate("ChangePass")}
+          disabled={loading}
         />
         <Button
           title={"Save Profile"}
           onPress={saveProfile}
           style={styles.saveButton}
           textStyle={{ color: "#D32F2F" }}
+          loading={loading}
+          disabled={loading}
         />
       </View>
     </Container>

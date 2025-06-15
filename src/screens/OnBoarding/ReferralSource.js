@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import React, { useState, useRef } from "react";
 import {
   View,
@@ -16,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import Container from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
 import Button from "../../components/Button/Button";
+import Api from "../../api";
 
 const ReferralSource = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -24,33 +27,35 @@ const ReferralSource = () => {
   const scrollViewRef = useRef(null);
 
   const options = [
-    { label: "App Store / Play Store", value: "App Store / Play Store" },
-    { label: "Social Media", value: "Social Media" },
-    { label: "Online Advertisement", value: "Online Advertisement" },
-    { label: "Website / Blog", value: "Website / Blog" },
-    { label: "Friend / Word of Mouth", value: "Friend / Word of Mouth" },
+    { label: "App Store / Play Store", value: "appStore" },
+    { label: "Social Media", value: "socialMedia" },
+    { label: "Online Advertisement", value: "onlineAdvertisement" },
+    { label: "Website / Blog", value: "websiteBlog" },
+    { label: "Friend / Word of Mouth", value: "wordOfMouth" },
     {
       label: "Influencer / Content Creator",
-      value: "Influencer / Content Creator",
+      value: "influencer",
     },
-    { label: "Email / Newsletter", value: "Email / Newsletter" },
-    { label: "Event / Conference", value: "Event / Conference" },
-    { label: "Flyer / Poster", value: "Flyer / Poster" },
-    { label: "Other", value: "Other" },
+    { label: "Email / Newsletter", value: "emailNewsletter" },
+    { label: "Event / Conference", value: "eventConference" },
+    { label: "Flyer / Poster", value: "flyerPoster" },
+    { label: "Other", value: "other" },
   ];
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    navigation.replace("SignIn");
+    await AsyncStorage.setItem("onboarding", "true");
+    await Api.addSurvey({ answer: selectedOption });
     Keyboard.dismiss();
-    setTimeout(() => {
-      navigation.navigate("SignIn");
-    }, 100);
   };
 
   return (
     <Container cusStyles={{ paddingHorizontal: 20 }}>
       <Header
-        onSkip={() => {
-          navigation.navigate("SignIn");
+        onSkip={async () => {
+          await AsyncStorage.setItem("onboarding", "true");
+          await Api.addSurvey({ answer: "skip" });
+          navigation.replace("SignIn");
         }}
         currentIndex={0}
       />

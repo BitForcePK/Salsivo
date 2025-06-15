@@ -16,11 +16,12 @@ import BackHeader from "../../components/BackHeader";
 import { useNavigation } from "@react-navigation/native";
 import { getAvatarUrl } from "../../utils/profile";
 import { useAuth } from "../../hooks/useAuth";
+import Api from "../../api";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const { profile } = useAuth();
+  const { profile, logout } = useAuth();
 
   const menuItems = [
     { icon: "user", text: "Profile", screen: "Profile" },
@@ -34,12 +35,34 @@ export default function SettingsScreen() {
       text: "Subscriptions",
       screen: "Subscriptions",
     },
-    { icon: "bell", text: "Notifications", hasSwitch: true },
+    {
+      icon: "bell",
+      text: "Notifications",
+      hasSwitch: true,
+      onPress: async (value) => {
+        console.log("Notifications");
+        setNotificationsEnabled(value);
+        const res = await Api.updateProfile({
+          notificationSub: value,
+        });
+
+        if (res?.error) {
+          setNotificationsEnabled(!value);
+          return;
+        }
+      },
+    },
     { icon: "message-circle", text: "Feedback" },
   ];
 
   const bottomActions = [
-    { icon: "log-out", text: "Logout", screen: "SignIn" },
+    {
+      icon: "log-out",
+      text: "Logout",
+      onPress: () => {
+        logout();
+      },
+    },
     { icon: "trash-2", text: "Delete Account", isRed: true },
   ];
 
@@ -48,7 +71,8 @@ export default function SettingsScreen() {
       key={index}
       style={styles.menuItem}
       onPress={() => {
-        navigation.navigate(item.screen);
+        if (item.screen) navigation.navigate(item.screen);
+        else if (item.onPress) item.onPress();
       }}
     >
       <View style={styles.menuIconContainer}>
@@ -66,7 +90,9 @@ export default function SettingsScreen() {
           trackColor={{ false: "#E0E0E0", true: "#E0E0E0" }}
           thumbColor={notificationsEnabled ? "#E74C3C" : "#f4f3f4"}
           ios_backgroundColor="#E0E0E0"
-          onValueChange={() => setNotificationsEnabled((prev) => !prev)}
+          onValueChange={() => {
+            if (item.onPress) item.onPress(!notificationsEnabled);
+          }}
           value={notificationsEnabled}
           style={styles.switch}
         />

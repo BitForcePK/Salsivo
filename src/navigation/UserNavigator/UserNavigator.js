@@ -20,6 +20,7 @@ import StitchMovesScreen from "../../screens/Home/StitchMovesScreen.js";
 import SaveStitchScreen from "../../screens/Home/SaveStitch.js";
 import ChoreographyScreen from "../../screens/Home/ChoreographyScreen.js";
 import ChoreographiesList from "../../screens/Home/ChoreographiesList.js";
+import WarmupDetails from "../../screens/WarmUps/Details.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,8 @@ export default function UserNavigator() {
       }}
     >
       <Stack.Screen name="TabNavigator" component={TabNavigator} />
+
+      <Stack.Screen name="WarmupDetails" component={WarmupDetails} />
 
       <Stack.Screen name="PremiumScreen" component={PremiumScreen} />
       <Stack.Screen name="MoveDetailsScreen" component={MoveDetailsScreen} />

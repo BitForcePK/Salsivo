@@ -1,9 +1,13 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { getAvatarUrl } from "../../utils/profile";
+import { useAuth } from "../../hooks/useAuth";
 
 const HomeProfileHeader = () => {
   const navigation = useNavigation();
+  const { profile } = useAuth();
+
   return (
     <View style={styles.container}>
       <Image
@@ -12,7 +16,7 @@ const HomeProfileHeader = () => {
       />
       <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
         <Image
-          source={require("../../../src/assets/images/dp.png")}
+          source={getAvatarUrl(profile?.avatar)}
           style={{ width: 50, height: 50, borderRadius: 100 }}
         />
       </TouchableOpacity>
